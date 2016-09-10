@@ -99,14 +99,13 @@ local function build_assertions(conf)
   local function fail(state, args)
     local out = {}
     for k,v in pairs(args) do out[k] = v end
+    out.n = nil
     args[1] = out
     args.n = 1
     return false
   end
   say:set("assertion.fail.negative", [[
-  Fail assertion was called with the following parameters (formatted as a table);
-  %s
-  ]])
+fail() assertion called with: %s]])
   luassert:register("assertion", "fail", fail,
                     "assertion.fail.negative",
                     "assertion.fail.negative")
@@ -137,13 +136,11 @@ local function build_assertions(conf)
   say:set("assertion.contains.negative", [[
 Expected array to contain element.
 Expected to contain:
-%s
-  ]])
+%s]])
   say:set("assertion.contains.positive", [[
 Expected array to not contain element.
 Expected to not contain:
-%s
-  ]])
+%s]])
   luassert:register("assertion", "contains", contains,
                     "assertion.contains.negative",
                     "assertion.contains.positive")
@@ -270,12 +267,10 @@ Body:
   end
   say:set("assertion.jsonbody.negative", [[
 Expected response body to contain valid json. Got:
-%s
-]])
+%s]])
   say:set("assertion.jsonbody.positive", [[
 Expected response body to not contain valid json. Got:
-%s
-]])
+%s]])
   luassert:register("assertion", "jsonbody", jsonbody,
                     "assertion.jsonbody.negative",
                     "assertion.jsonbody.positive")
@@ -305,14 +300,12 @@ Expected response body to not contain valid json. Got:
 Expected header:
 %s
 But it was not found in:
-%s
-]])
+%s]])
   say:set("assertion.res_header.positive", [[
 Did not expected header:
 %s
 But it was found in:
-%s
-]])
+%s]])
   luassert:register("assertion", "header", res_header,
                     "assertion.res_header.negative",
                     "assertion.res_header.positive")
@@ -350,14 +343,12 @@ But it was found in:
 Expected query parameter:
 %s
 But it was not found in:
-%s
-]])
+%s]])
   say:set("assertion.req_query_param.positive", [[
 Did not expected query parameter:
 %s
 But it was found in:
-%s
-]])
+%s]])
   luassert:register("assertion", "queryparam", req_query_param,
                     "assertion.req_query_param.negative",
                     "assertion.req_query_param.positive")
@@ -396,14 +387,12 @@ But it was found in:
 Expected url encoded form parameter:
 %s
 But it was not found in request:
-%s
-]])
+%s]])
   say:set("assertion.req_form_param.positive", [[
 Did not expected url encoded form parameter:
 %s
 But it was found in request:
-%s
-]])
+%s]])
   luassert:register("assertion", "formparam", req_form_param,
                     "assertion.req_form_param.negative",
                     "assertion.req_form_param.positive")

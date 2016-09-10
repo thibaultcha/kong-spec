@@ -51,8 +51,7 @@ function resty_http_wrapper_mt:send(opts)
       body = body.."--"..boundary.."--\r\n"
     end
 
-    local clength = util.lookup(headers, "content-length")
-    if not clength then
+    if not util.lookup(headers, "content-length") then
       headers["content-length"] = #body
     end
 
@@ -77,7 +76,7 @@ function resty_http_wrapper_mt:send(opts)
     local reader = res.read_body
     res.read_body = function(_self)
       if not _self._cached_body and not _self._cached_error then
-        _self._cached_body, _self._cached_error = reader(self)
+        _self._cached_body, _self._cached_error = reader(_self)
       end
       return _self._cached_body, _self._cached_error
     end
@@ -87,4 +86,3 @@ function resty_http_wrapper_mt:send(opts)
 end
 
 return resty_http_wrapper_mt
-

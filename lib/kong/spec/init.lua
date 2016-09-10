@@ -14,6 +14,7 @@ local resty_http_wrapper_mt = require "kong.spec.resty-http-wrapper"
 log.set_lvl(log.levels.quiet)
 
 local _M = {}
+_M.__index = _M
 
 function _M.new(conf_path)
   local ok, _, stdout = pl_utils.executeex("which kong")
@@ -48,8 +49,8 @@ end
 function _M.http_client(host, port, timeout)
   timeout = timeout or 10000
   local client = assert(http.new())
-  assert(client:connect(host, port))
   client:set_timeout(timeout)
+  assert(client:connect(host, port))
   return setmetatable({
     client = client
   }, resty_http_wrapper_mt)
