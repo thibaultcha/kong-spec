@@ -199,7 +199,9 @@ Expected to not contain:
     else
       local body, err = res:read_body()
       local output = body
-      if not output then output = "Error reading body: "..err end
+      if not output and err then
+        output = "Error reading body: "..err
+      end
       output = pl_stringx.strip(output)
       table.insert(args, 1, output)
       table.insert(args, 1, res.status)

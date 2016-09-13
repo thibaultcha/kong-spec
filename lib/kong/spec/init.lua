@@ -102,8 +102,9 @@ end
 function _M:clean_prefix(prefix)
   prefix = prefix or self.conf.prefix
   if pl_path.exists(prefix) then
-    pl_dir.rmtree(prefix)
+    return pl_dir.rmtree(prefix)
   end
+  return true
 end
 
 -- @section test_instance

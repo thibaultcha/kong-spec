@@ -1,6 +1,4 @@
 lint:
 	@luacheck . \
-    --std 'ngx_lua+busted' \
+		--std 'ngx_lua+busted' \
 		--no-unused-args
-
-
